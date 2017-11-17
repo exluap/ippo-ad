@@ -6,7 +6,7 @@ import (
     "log"
     "net/http"
     "strings"
-    "github.com/mdigger/translit"
+    "github.com/exluap/translit"
 
     ps "github.com/gorillalabs/go-powershell"
     "github.com/gorillalabs/go-powershell/backend"
