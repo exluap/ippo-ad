@@ -42,9 +42,9 @@ func login(w http.ResponseWriter, r *http.Request) {
         fmt.Println("email:", r.Form["email"])
         fmt.Println("pass:", r.Form["password"])
        // fmt.Println(translit.Ru(strings.Join(r.Form["surname"], " ")))
-        fmt.Fprintf(w, "Твой логин: " + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")))
-        fmt.Fprintf(w, "Пароль: Qwerty123")
-        fmt.Fprintf(w, "Теперь ты можешь входить с этими данными в Windows и полноценно работать :) Хорошего тебе дня!")
+        fmt.Fprintf(w, "Твой логин: " + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "\n")
+        fmt.Fprintf(w, "Пароль: Qwerty123" + " (этот пароль временный и работает только на первый вход) \n")
+        fmt.Fprintf(w, "Теперь ты можешь входить с этими данными в Windows и полноценно работать :) \n Хорошего тебе дня!")
         fmt.Println("New-ADUser -Name '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "' -AccountPassword(ConvertTo-SecureString 'Qwerty123' -AsPlainText -Force) -ChangePasswordAtLogon 1 -Company '" + translit.Ru(strings.Join(r.Form["univerkafedra"], " ")) + "' -Department '" + translit.Ru(strings.Join(r.Form["univergroup"], " ")) + "' -DisplayName '" + translit.Ru(strings.Join(r.Form["surname"], " ")) + " " + translit.Ru(strings.Join(r.Form["firstname"], " ")) +  " "+ translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -EmailAddress '" + strings.Join(r.Form["email"], " ") + "' -Enabled 1 -GivenName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + " " + translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -SurName '" + translit.Ru(strings.Join(r.Form["surname"]," ")) + " " + "' -HomeDirectory '\\\\POSEIDON\\movedUsers\\%username%' -SamAccountName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "' -UserPrincipalName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "@ippo.mirea.ru'")
         //fmt.Println("ADD-ADGroupMember 'students' –members '"+translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " "))+"'")
         
@@ -54,14 +54,16 @@ func login(w http.ResponseWriter, r *http.Request) {
         // start a local powershell process
         shell, err := ps.New(back)
         if err != nil {
+            fmt.Fprintf(w, "Извини, но что-то пошло не так. Позови администратора и он решит твой вопрос")
             panic(err)
         }
         defer shell.Exit()
 
         // ... and interact with it
-        stdout, _, err := shell.Execute("New-ADUser -Name '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "' -AccountPassword(ConvertTo-SecureString 'Qwerty123' -AsPlainText -Force) -ChangePasswordAtLogon 1 -Company '" + translit.Ru(strings.Join(r.Form["univerkafedra"], " ")) + "' -Department '" + translit.Ru(strings.Join(r.Form["univergroup"], " ")) + "' -DisplayName '" + translit.Ru(strings.Join(r.Form["surname"], " ")) + " " + translit.Ru(strings.Join(r.Form["firstname"], " ")) +  " "+ translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -EmailAddress '" + strings.Join(r.Form["email"], " ") + "' -Enabled 1 -GivenName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + " " + translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -SurName '" + translit.Ru(strings.Join(r.Form["surname"]," ")) + " " + "' -HomeDirectory '\\\\POSEIDON\\movedUsers\\%username%' -SamAccountName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "' -UserPrincipalName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "@ippo.mirea.ru'")
+        stdout, _, err := shell.Execute("New-ADUser -Name '" + translit.Ru(strings.Join(r.Form["surname"], " ")) + " " + translit.Ru(strings.Join(r.Form["firstname"], " ")) +  " " + translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -AccountPassword(ConvertTo-SecureString 'Qwerty123' -AsPlainText -Force) -ChangePasswordAtLogon 1 -Company '" + translit.Ru(strings.Join(r.Form["univerkafedra"], " ")) + "' -Department '" + translit.Ru(strings.Join(r.Form["univergroup"], " ")) + "' -DisplayName '" + translit.Ru(strings.Join(r.Form["surname"], " ")) + " " + translit.Ru(strings.Join(r.Form["firstname"], " ")) +  " "+ translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -EmailAddress '" + strings.Join(r.Form["email"], " ") + "' -Enabled 1 -GivenName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + " " + translit.Ru(strings.Join(r.Form["endname"]," ")) + "' -SurName '" + translit.Ru(strings.Join(r.Form["surname"]," ")) + " " + "' -HomeDirectory '\\\\POSEIDON\\movedUsers\\%username%' -SamAccountName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "' -UserPrincipalName '" + translit.Ru(strings.Join(r.Form["firstname"], " ")) + "." + translit.Ru(strings.Join(r.Form["surname"], " ")) + "@ippo.mirea.ru'")
 
         if err != nil {
+            fmt.Fprintf(w, "Извини, но что-то пошло не так. Позови администратора и он решит твой вопрос")
             panic(err)
         }
 
@@ -73,7 +75,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 func main() {
     http.HandleFunc("/", sayhelloName) // setting router rule
     http.HandleFunc("/register", login)
-    err := http.ListenAndServe(":80", nil) // setting listening port
+    err := http.ListenAndServe(":9090", nil) // setting listening port
     if err != nil {
         log.Fatal("ListenAndServe: ", err)
     }
