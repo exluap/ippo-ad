@@ -1,25 +1,49 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Validation</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
-<form id="signup" name="signup" action="/register" method="post">
-	<h1><center>Форма регистрации</center></h1>
-	<center>
-	<label for="surname">Фамилия</label>
-	<input class="text" name="surname" type="text" /> <br><br><br>
-	<label for="firstname">Имя</label>
-	<input class="text" name="firstname" type="text" /> <br><br><br>
-	<label for="endname">Отчество</label>
-	<input class="text" name="endname" type="text" /> <br><br><br>
-	<label for="univergroup">Группа</label>
-	<input class="text" name="univergroup" type="text" /> <br><br><br>
-	<label for="univerkafedra">Кафедра</label>
-	<input class="text" name="univerkafedra" type="text" /> <br><br><br>
-	<label for="email">Email</label>
-	<input class="text" name="email" type="text" /> <br><br><br>
-	<label for="password">Пароль</label>
-	<input class="password" name="password" type="password" /> <br>
-	<p>Пароль не менее 8 символов, обязательно должна быть большая буква и 1 цифра. Иначе после регистрации вход в систему невозможен</p>
-	<br><br>
-	<input class="btn" type="submit" value="Зарегистрироваться" /></center>
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+  <form action="/register" method="post" class="form">
+	<div class="form__field">
+		<input type="text" name="surname" placeholder="Фамилия*" required />
+	</div>
+	<div class="form__field">
+		<input type="text" name="firstname" placeholder="Имя*" required />
+	</div>
+	<div class="form__field">
+		<input type="text" name="endname" placeholder="Отчество*" required />
+	</div>
+	<div class="form__field">
+		<input type="email" name="email" placeholder="E-Mail*"  required/>
+		<span class="form__error">Это поле должно содержать E-Mail в формате example@site.com</span>
+	</div>
+	<div class="form__field">
+		<input type="tel" name="name" placeholder="Телефон*" pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}" minlength="18" maxlength="18" />
+		<span class="form__error">Это поле должно содержать телефон в формате +7 (123) 456-78-90</span>
+	</div>
+	<div class="form__field">
+		<input type="text" name="univerkafedra" placeholder="Ваша кафедра*" required/>
+	</div>
+	<div class="form__field">
+		<input type="text" name="univergroup" placeholder="Ваша группа*" required />
+	</div>
+	<div class="form__field">
+		<input type="checkbox" required name="terms"> Я согласен на обработку данных
+	</div>
+	
+	<button type="submit">Отправить</button>
 </form>
-
+  
+  
+</body>
 </html>

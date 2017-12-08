@@ -73,7 +73,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    http.HandleFunc("/", sayhelloName) // setting router rule
+    http.Handle("/css/", http.FileServer(http.Dir("./css/")))
+    http.HandleFunc("/", login) // setting router rule
     http.HandleFunc("/register", login)
     err := http.ListenAndServe(":9090", nil) // setting listening port
     if err != nil {
